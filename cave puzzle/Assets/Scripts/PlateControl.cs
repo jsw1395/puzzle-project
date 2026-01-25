@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchControl : MonoBehaviour, DeviceInterface
+public class PlateControl : MonoBehaviour, DeviceInterface
 {
     public List<GameObject> linkedDevice = new List<GameObject>(); //연결된 장치들의 리스트
     public void Action()
     {
-        Debug.Log("Switch toggled.");
+        Debug.Log("Plate toggled.");
         foreach (GameObject device in linkedDevice)
         {
             DeviceInterface deviceInterface = device.GetComponent<DeviceInterface>();
