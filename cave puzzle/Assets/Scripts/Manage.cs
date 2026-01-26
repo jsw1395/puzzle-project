@@ -1,23 +1,30 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Manage: MonoBehaviour
 {
-    GameObject player;
-    GameObject bat;
+    public static Manage Instance = null;
 
-    [SerializeField]
-    bool playerEnable = true;
-    bool batEnable = false;
-
-    private void Start()
+    private void Awake()
     {
-        player = GameObject.FindWithTag("Player");
-        bat = GameObject.FindWithTag("Bat");
-
-        Change();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else if (Instance != this)
+        {
+            Destroy(gameObject);
+        }
     }
 
-    private void Update()
+    public GameObject player;
+    public GameObject bat;
+    public bool playerEnable = true;
+    public bool batEnable = false;
+    public int sceneIndex = 0;
+
+    public void Update()
     {
         if (Input.GetKeyDown(KeyCode.F))
         {
@@ -36,7 +43,7 @@ public class Manage: MonoBehaviour
         }
     }
 
-    void Change()
+    public void Change()
     {
         player.GetComponent<Collider2D>().enabled = playerEnable;
         player.GetComponent<Rigidbody2D>().simulated = playerEnable;
@@ -64,5 +71,26 @@ public class Manage: MonoBehaviour
             col2.a = 1.0f;
             bat.GetComponent<SpriteRenderer>().color = col2;
         }
+    }
+
+    public void LoadSceneIdx(int idx)
+    {
+        SceneManager.LoadScene(idx);
+        sceneIndex = idx;
+        if (sceneIndex >= 2) {
+            player = GameObject.FindWithTag("Player");
+            bat = GameObject.FindWithTag("Bat");
+        }
+        Change();
+    }
+
+    public void NextScene()
+    {
+        int nextIndex = sceneIndex + 1;
+        if (nextIndex >= SceneManager.sceneCountInBuildSettings)
+        {
+            nextIndex = 0;
+        }
+        LoadSceneIdx(nextIndex);
     }
 }
