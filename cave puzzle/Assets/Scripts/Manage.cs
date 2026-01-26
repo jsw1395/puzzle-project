@@ -41,6 +41,11 @@ public class Manage: MonoBehaviour
                 Change();
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            NextScene();
+        }
     }
 
     public void Change()
@@ -80,8 +85,8 @@ public class Manage: MonoBehaviour
         if (sceneIndex >= 2) {
             player = GameObject.FindWithTag("Player");
             bat = GameObject.FindWithTag("Bat");
-        }
-        Change();
+            Change();
+        }   
     }
 
     public void NextScene()
