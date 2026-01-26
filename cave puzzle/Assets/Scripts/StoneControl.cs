@@ -1,27 +1,37 @@
 using UnityEngine;
 
-public class StoneControl : MonoBehaviour, DeviceInterface 
+public class StoneControl : MonoBehaviour
 {
-    enum PlayerDirection
+    Rigidbody2D rigid;
+    RigidbodyConstraints2D originalConst;
+
+    private void Start()
     {
-        Up,
-        Down,
-        Left,
-        Right
+        rigid = GetComponent<Rigidbody2D>();
+        originalConst = rigid.constraints;
     }
-    public void Action()
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Pushed stone.");
+        if (collision.collider.CompareTag("Bat"))
+        {
+            rigid.constraints = RigidbodyConstraints2D.FreezeAll;
+        }
+        if (collision.collider.CompareTag("Slide"))
+        {
+            Debug.Log("±¼·¯°¨.");
+        }
     }
 
-    void Detect()
+    private void OnCollisionExit2D(Collision2D collision)
     {
-
-    }
-
-    void Move(PlayerDirection direction)
-    {
-
+        if (collision.collider.CompareTag("Bat"))
+        {
+            rigid.constraints = originalConst;
+        }
+        if (collision.collider.CompareTag("Slide"))
+        {
+            Debug.Log("Á¤Áö");
+        }
     }
 }
 

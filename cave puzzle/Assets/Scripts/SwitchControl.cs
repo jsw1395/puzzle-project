@@ -20,4 +20,9 @@ public class SwitchControl : MonoBehaviour, DeviceInterface
             }
         }
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        Action();
+    }
 }

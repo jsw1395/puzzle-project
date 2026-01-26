@@ -21,12 +21,4 @@ public class LeverControl : MonoBehaviour, DeviceInterface
             }
         }
     }
-
-    private void Update() //테스트용
-    {
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            Action();
-        }
-    }
 }
