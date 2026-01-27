@@ -6,6 +6,7 @@ public class PlateControl : MonoBehaviour, DeviceInterface
     public List<GameObject> linkedDevice = new List<GameObject>(); //연결된 장치들의 리스트
     [SerializeField]
     int num = 0;
+    public bool isActive = false;
 
     public void Action()
     {
@@ -28,7 +29,7 @@ public class PlateControl : MonoBehaviour, DeviceInterface
     {
         if(collision.tag == "Player" ||  collision.tag == "Stone")
         {
-            if (num == 0) Action();
+            if (num == 0) Action(); isActive = true;
             num++;
         }
     }
@@ -38,7 +39,7 @@ public class PlateControl : MonoBehaviour, DeviceInterface
         if (collision.tag == "Player" || collision.tag == "Stone")
         {
             num--;
-            if (num == 0) Action();
+            if (num == 0) Action(); isActive = false;
         }
     }
 }

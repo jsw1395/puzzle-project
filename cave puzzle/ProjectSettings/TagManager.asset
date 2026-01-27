@@ -5,13 +5,13 @@ TagManager:
   serializedVersion: 3
   tags:
   - Bat
-  - Enteract(player)
-  - Enteract(bat)
   - Lever
   - Stone
   - Switch
   - Shadow
   - Slide
+  - Goal
+  - Plate
   layers:
   - Default
   - TransparentFX
