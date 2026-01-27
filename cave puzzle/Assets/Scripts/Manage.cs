@@ -97,5 +97,9 @@ public class Manage: MonoBehaviour
             nextIndex = 0;
         }
         LoadSceneIdx(nextIndex);
+        if(SceneManager.GetActiveScene().name == "Stage5")
+        {
+            NextScene();
+        }
     }
 }
