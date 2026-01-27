@@ -5,51 +5,75 @@ public class MultipleActive : MonoBehaviour
 {
     public List<GameObject> linkedDevice = new List<GameObject>();
     public List<GameObject> checkDevice = new List<GameObject>();
-    public bool allActive = false;
+    public bool allActive = true;
+    public bool requestedActiveFunc = false;
     // Update is called once per frame
     void Update()
     {
-        allActive = false;
+        allActive = true;
         foreach (GameObject cDevice in checkDevice)
         {
             if(cDevice.tag == "Plate")
             {
                 PlateControl plate = cDevice.GetComponent<PlateControl>();
-                if (plate.isActive)
+                if (!plate.isActive)
                 {
-                    allActive = true;
+                    allActive = false;
                 }
             }
             else if (cDevice.tag == "Switch")
             {
                 SwitchControl Switch = cDevice.GetComponent<SwitchControl>();
-                if (Switch.isActive)
+                if (!Switch.isActive)
                 {
-                    allActive = true;
+                    allActive = false;
                 }
             }
             else if (cDevice.tag == "Lever")
             {
                 LeverControl lever = cDevice.GetComponent<LeverControl>();
-                if (lever.isActive)
+                if (!lever.isActive)
                 {
-                    allActive = true;
+                    allActive = false;
                 }
             }
         }
         if (allActive)
         {
-            foreach (GameObject device in linkedDevice)
+            if(!requestedActiveFunc)
             {
-                DeviceInterface deviceInterface = device.GetComponent<DeviceInterface>();
-                if (deviceInterface != null) 
+                foreach (GameObject device in linkedDevice)
                 {
-                    deviceInterface.Action();
+                    DeviceInterface deviceInterface = device.GetComponent<DeviceInterface>();
+                    if (deviceInterface != null)
+                    {
+                        deviceInterface.Action();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Linked device does not implement DeviceInterface.");
+                    }
                 }
-                else
+                requestedActiveFunc = true;
+            }
+        }
+        else
+        {
+            if (requestedActiveFunc)
+            {
+                foreach (GameObject device in linkedDevice)
                 {
-                    Debug.LogWarning("Linked device does not implement DeviceInterface.");
+                    DeviceInterface deviceInterface = device.GetComponent<DeviceInterface>();
+                    if (deviceInterface != null)
+                    {
+                        deviceInterface.Action();
+                    }
+                    else
+                    {
+                        Debug.LogWarning("Linked device does not implement DeviceInterface.");
+                    }
                 }
+                requestedActiveFunc = false;
             }
         }
     }
